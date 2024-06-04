@@ -66,22 +66,27 @@ function page() {
           </div>
           <div className='flex w-1/2 justify-center items-center gap-2'>
             <div className='cursor-pointer flex justify-center items-center'>
-              <Link href="/mostrar">
+              <Link href={`/mostrar/${mascota.id}`}>
               <Image 
               src={btnShow}
+              alt='mostrar'
               />
               </Link>
             </div>
             <div className='cursor-pointe flex justify-center items-center '>
+            <Link href={`/update/${mascota.id}`}>
             <Image 
               src={btnEdit}
+              alt='editar'
               />
+            </Link>
             </div>
             <div
             onClick={() => deleteMascota(mascota.id)}
             className='cursor-pointerflex justify-center items-center'>
               <Image 
               src={btnDelete}
+              alt='eliminar'
               />
             </div>
           </div>

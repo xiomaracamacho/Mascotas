@@ -2,12 +2,13 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import camera from "../img/photo-lg-0.svg"
-import btnSave from "../img/btn-save.svg"
-import arrows from "../img/arrows.svg"
-import btnClose from "../img/btn-close.svg"
+import camera from "../../img/photo-lg-0.svg"
+import btnSave from "../../img/btn-save.svg"
+import arrows from "../../img/arrows.svg"
+import btnClose from "../../img/btn-close.svg"
 import Image from 'next/image'
 import axios from 'axios';
+import { useParams } from 'next/navigation';
 
 function page() {
 
@@ -15,6 +16,8 @@ function page() {
   const [category, setCategory] = useState([])
   const [genders, setGenders] = useState([])
   const [file, setFile] = useState(null)
+  const [mascota, setMascota] = useState([])
+  const {id} = useParams();
 
   const [pet, setPet] = useState({
     name: "",
@@ -23,6 +26,15 @@ function page() {
     photo: "img",
     gender_id: "",
   })
+
+  const getMascota = async () => {
+    try {
+        const respuesta = await axios.get(`http://localhost:3000/api/mascotas/${id}`)
+    setMascota(respuesta.data)
+    } catch (error) {
+        console.log(error.reponse.data);
+    }
+ }
 
   const getRazas = async () => {
     try {
@@ -59,26 +71,8 @@ function page() {
     })
   }
 
-  // const postMascota = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('name', pet.name)
-  //     formData.append('race_id', pet.race_id)
-  //     formData.append('category_id', pet.category_id)
-  //     formData.append('gender_id', pet.gender_id)
-  //     formData.append('photo', file)
 
-  //     const registro = await axios.post("http://localhost:3000/api/mascotas", formData, {
-  //       headers: { 'Content-Type': 'multipart/form-data'}
-  //     })
-  //     console.log(registro);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  const postMascota = async (event) => {
+  const putMascota = async (event) => {
     event.preventDefault();
     try {
       console.log(pet);
@@ -89,8 +83,8 @@ function page() {
         gender_id: parseInt(pet.gender_id, 10)
       };
 
-      const registro = await axios.post("http://localhost:3000/api/mascotas", petData);
-      console.log(registro);
+      const update = await axios.put(`http://localhost:3000/api/mascotas/${id}`, petData);
+      console.log(update);
     } catch (error) {
       console.log(error.response.data);
     }
@@ -100,6 +94,7 @@ function page() {
     getRazas();
     getCategory();
     getGenders();
+    getMascota();
   }, [])
 
 
@@ -135,15 +130,14 @@ function page() {
          
         </div>
     <div className="">
-        <form className='flex flex-col items-center gap-3' onSubmit={postMascota}>
-            <input name='name' onChange={inputValue} 
-            className='p-3 w-full bg-[#ffffffa5] outline-none placeholder:text-[#252f7c] rounded-[30px]' type="text"placeholder='Nombre' />
+        <form className='flex flex-col items-center gap-3' onSubmit={putMascota}>
+            <input name='name' onChange={inputValue} value={mascota.name}
+            className='p-3 w-full bg-[#ffffffa5] outline-none placeholder:text-[#252f7c] rounded-[30px]' type="text" />
             <select name='race_id' onChange={inputValue} 
             className='p-3 w-full bg-[#ffffffa5] outline-none   rounded-[30px]'>
-              <option value="">Seleccione Raza...</option>
               {
                 razas.map(raza => (
-                  <option key={raza.id} value={raza.id}>
+                  <option key={raza.id} value={mascota.fk_race?.name}>
                     {raza.name}
                   </option>
                 ))
@@ -151,10 +145,9 @@ function page() {
             </select>
             <select name='category_id' onChange={inputValue}
              className='p-3 w-full bg-[#ffffffa5] outline-none  rounded-[30px]'>
-              <option value="">Seleccione Categoría...</option>
               {
                 category.map(category => (
-                  <option key={category.id} value={category.id}>
+                  <option key={category.id} value={mascota.fk_category?.name}>
                     {category.name}
                   </option>
                 ))
@@ -167,16 +160,15 @@ function page() {
             className='p-3 w-full bg-[#ffffffa5] outline-none placeholder:text-[#252f7c] rounded-[30px]' type="file" placeholder='Subir Foto' />
             <select name='gender_id' onChange={inputValue}
              className='p-3 w-full bg-[#ffffffa5] outline-none  rounded-[30px]'>
-              <option value="">Seleccione Género...</option>
               {
                 genders.map(gender => (
-                  <option key={gender.id} value={gender.id}>
+                  <option key={gender.id} value={mascota.fk_gender?.name}>
                     {gender.name}
                   </option>
                 ))
               }
             </select>
-            <button type='submit'>crear</button>
+            <button type='submit'>Update</button>
          </form>
     </div>
     <div>

@@ -2,7 +2,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="bg-custom-image w-full bg-center h-screen flex justify-center items-end">
+    <div className="flex justify-center items-center">
+      <div className="bg-custom-image bg-cover bg-center md:w-1/4  h-screen flex justify-center items-end">
       <form className="w-full flex flex-col gap-2 p-2">
         <input className="bg-[#ffffff8d] rounded-[30px] p-3" type="text" placeholder="Correo electrónico" />
         <input className="bg-[#ffffff8d] rounded-[30px] p-3" type="text"  placeholder="Contraseña"/>
@@ -10,6 +11,7 @@ export default function Home() {
           <Link href="/pets">Ingresar</Link>
           </button>
       </form>
+    </div>
     </div>
   );
 }
