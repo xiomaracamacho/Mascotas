@@ -37,9 +37,17 @@ export async function PUT (request, {params}) {
     try {
         const id = parseInt(params.id)
         const data = await request.json()
+
+        const updatedData = {
+            name: data.name,
+            photo: data.photo,
+            fk_race: { connect: { id: data.race_id } },
+            fk_category: { connect: { id: data.category_id } },
+            fk_gender: { connect: { id: data.gender_id } }
+          };
         const result = await prisma.mascota.update({
             where : {id : id},
-            data : data
+            data : updatedData
         })
         return NextResponse.json({message: result}, {status: 200})
     } catch (error) {

@@ -3,13 +3,12 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
-import { FaSearch, FaPencilAlt } from "react-icons/fa";
-import { RiDeleteBin5Fill } from "react-icons/ri";
 import btnAdd from "../img/btn-add.svg";
 import btnClose from "../img/btn-close.svg";
 import btnDelete from "../img/btn-delete.svg";
 import btnEdit from "../img/btn-edit.svg";
 import btnShow from "../img/btn-show.svg";
+import btnBack from "../img/btn-back.svg"
 
 import Image from 'next/image';
 
@@ -34,12 +33,20 @@ function page() {
 
 
   return (
-    <div className='bg-back-image bg-auto w-full h-screen flex  flex-col p-3 gap-3'>
-       <div className='flex h-12 w-full justify-center items-center gap-4' >
+   <div className='flex justify-center items-center'>
+     <div className='bg-back-image bg-cover bg-center   md:w-1/4 w-full h-screen flex  flex-col p-3 gap-3'>
+       <div className='flex h-12 w-full justify-center items-center gap-4 ' >
+        <Link href="/">
+        <Image
+        src={btnBack}
+        alt='btn-back'
+        />
+        </Link>
        <h1 className='text-white text-center w-full'>Administrar mascotas</h1>
              <Link href="/">
             <Image
         src={btnClose}
+        alt='btn-close'
         />
            </Link>
        </div>
@@ -47,24 +54,22 @@ function page() {
         <Link href="/registrar">
           <Image
           src={btnAdd}
+          alt='btn-register'
           />
         </Link>
        </div>
-       <div>
-       </div>
-       {
+      <div className='h-4/5 overflow-scroll '>
+      {
         mascotas.map(mascota => (
-          <div className='bg-[#ffffff81] rounded-xl flex '>
-          <div key={mascota.id} className='flex w-1/2 p-3 
-          
-          justify-center items-center gap-2'>
-            <div className='h-20 w-20 bg-white rounded-full flex justify-center items-center'>{mascota.photo}</div>
-            <div className="flex flex-col">
+          <div key={mascota.id} className='bg-[#ffffff81] rounded-[25px] p-3 flex mb-3 '>
+          <div  className='flex w-2/3 justify-center items-center gap-2'>
+            <div className='h-20 w-20 bg-white border-blue-500 border-[2px] rounded-full flex justify-center items-center'>{mascota.photo}</div>
+            <div className="flex flex-col w-1/3">
               <h1 className='font-bold text-blue-800'>{mascota.name}</h1> 
               <h2 className='text-gray-700'>{mascota.race}</h2>
               </div>
           </div>
-          <div className='flex w-1/2 justify-center items-center gap-2'>
+          <div className='flex w-1/3 justify-center items-center gap-2'>
             <div className='cursor-pointer flex justify-center items-center'>
               <Link href={`/mostrar/${mascota.id}`}>
               <Image 
@@ -94,7 +99,9 @@ function page() {
         ))
        
         }
+      </div>
     </div>
+   </div>
   )
 }
 

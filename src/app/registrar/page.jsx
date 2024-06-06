@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState } from 'react'
@@ -6,6 +7,7 @@ import camera from "../img/photo-lg-0.svg"
 import btnSave from "../img/btn-save.svg"
 import arrows from "../img/arrows.svg"
 import btnClose from "../img/btn-close.svg"
+import btnBack from "../img/btn-back.svg"
 import Image from 'next/image'
 import axios from 'axios';
 
@@ -59,25 +61,6 @@ function page() {
     })
   }
 
-  // const postMascota = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('name', pet.name)
-  //     formData.append('race_id', pet.race_id)
-  //     formData.append('category_id', pet.category_id)
-  //     formData.append('gender_id', pet.gender_id)
-  //     formData.append('photo', file)
-
-  //     const registro = await axios.post("http://localhost:3000/api/mascotas", formData, {
-  //       headers: { 'Content-Type': 'multipart/form-data'}
-  //     })
-  //     console.log(registro);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   const postMascota = async (event) => {
     event.preventDefault();
     try {
@@ -91,6 +74,7 @@ function page() {
 
       const registro = await axios.post("http://localhost:3000/api/mascotas", petData);
       console.log(registro);
+      
     } catch (error) {
       console.log(error.response.data);
     }
@@ -104,9 +88,16 @@ function page() {
 
 
   return (
-    <div className='bg-back-image bg-cover w-full h-screen flex  flex-col p-3 gap-3'>
+   <div className='flex justify-center items-center'>
+     <div className='bg-back-image bg-cover bg-center md:w-1/4 w-full h-screen flex  flex-col p-3 gap-3'>
     <div className='flex h-12 w-full justify-center items-center gap-4' >
-    <h1 className='text-white text-center w-full'>Administrar mascotas</h1>
+    <Link href="/pets">
+        <Image
+        src={btnBack}
+        alt='btn-back'
+        />
+        </Link>
+    <h1 className='text-white text-center w-full'>Adicionar mascotas</h1>
        <Link href="/">
           <Image
           src={btnClose}
@@ -115,7 +106,7 @@ function page() {
          </Link>
     </div>
     <div className='h-64 flex justify-center items-center'>
-         <div className='rounded-full w-32 h-32 bg-green-100 flex justify-center items-center'>
+         <div className='rounded-full w-32 h-32 bg-green-100 border-2 border-gray-500 flex justify-center items-center'>
          {
             file && file ? (
             <Image
@@ -176,17 +167,18 @@ function page() {
                 ))
               }
             </select>
-            <button type='submit'>crear</button>
-         </form>
-    </div>
-    <div>
-     <Link href="/pets">
+            <div>
+     <button  type='submit'>
         <Image  src={btnSave} 
         alt='btn close'/>
-     </Link>
+     </button>
     </div>
+         </form>
+    </div>
+   
  </div>
+   </div>
   )
 }
 
-export default page
+export default page;

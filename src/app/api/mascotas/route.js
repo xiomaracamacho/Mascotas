@@ -1,36 +1,6 @@
-import prisma from "@/lib/prisma"
-import { NextResponse } from "next/server"
-import { writeFile } from "fs/promises"
-import path from "path"
+import prisma from "@/lib/prisma"; 
+import { NextResponse } from "next/server";
 
-// export async function POST (request) {
-//     try {
-//         const data = await request.formData()
-//         const image = data.get("photo")
-
-//         const textImg = await image.arrayBuffer()
-//         const buffer = Buffer.from(textImg)
-
-//         const rutaImg = path.join(process.cwd(), 'public', image.name) 
-//          await writeFile(rutaImg, buffer)
-
-//         const pet = await prisma.mascota.create({
-//             name: data.get("name"),
-//             photo: image.name,
-//             race_id: data.get("race_id"),
-//             category_id: data.get("category_id"),
-//             gender_id: data.get("gender_id"),
-            
-//         })
-
-//         return  new NextResponse(JSON.stringify(pet), {
-//             headers: {"Content-Type":"application/json"},
-//             status: 200
-//         })
-//     } catch (error) {
-//         return new NextResponse(error.message, {status:500})
-//     }
-// }
 export async function POST (request) {
     try {
         const data = await request.json()
