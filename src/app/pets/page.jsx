@@ -34,7 +34,7 @@ function page() {
 
   return (
    <div className='flex justify-center items-center'>
-     <div className='bg-back-image bg-cover bg-center   md:w-1/4 w-full h-screen flex  flex-col p-3 gap-3'>
+     <div className='bg-back-image bg-cover bg-center md:w-[400px] w-full h-screen flex  flex-col p-3 gap-3'>
        <div className='flex h-12 w-full justify-center items-center gap-4 ' >
         <Link href="/">
         <Image
@@ -63,9 +63,14 @@ function page() {
         mascotas.map(mascota => (
           <div key={mascota.id} className='bg-[#ffffff81] rounded-[25px] p-3 flex mb-3 '>
           <div  className='flex w-2/3 justify-center items-center gap-2'>
-            <div className='h-20 w-20 bg-white border-blue-500 border-[2px] rounded-full flex justify-center items-center'>{mascota.photo}</div>
+            <div className='h-20 w-20 bg-white border-[#1f204db4] border-[2px] rounded-full flex justify-center items-center'>
+            <img 
+            src={`/img/${mascota.photo}`} 
+            alt={mascota.name} 
+            className="h-full w-full object-cover rounded-full" />
+              </div>
             <div className="flex flex-col w-1/3">
-              <h1 className='font-bold text-blue-800'>{mascota.name}</h1> 
+              <h1 className='font-bold text-[#10103577]'>{mascota.name}</h1> 
               <h2 className='text-gray-700'>{mascota.race}</h2>
               </div>
           </div>

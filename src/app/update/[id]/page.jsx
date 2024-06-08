@@ -2,16 +2,17 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import camera from "../../img/photo-lg-0.svg"
 import arrows from "../../img/arrows.svg"
 import btnClose from "../../img/btn-close.svg"
 import btnUpdate from "../../img/btn-update.svg"
 import btnBack from "../../img/btn-back.svg"
 import Image from 'next/image'
 import axios from 'axios';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 function page() {
+
+  const router = useRouter();
 
   const [razas, setRazas] = useState([])
   const [category, setCategory] = useState([])
@@ -24,7 +25,6 @@ function page() {
     name: "",
     race_id: "",
     category_id: "",
-    photo: "img update",
     gender_id: "",
   })
 
@@ -32,6 +32,7 @@ function page() {
     try {
         const respuesta = await axios.get(`http://localhost:3000/api/mascotas/${id}`)
         const mascotaData = respuesta.data;
+        setMascota(mascotaData)
       setPet({
         name: mascotaData.name,
         race_id: mascotaData.race_id,
@@ -83,21 +84,26 @@ function page() {
   const putMascota = async (event) => {
     event.preventDefault();
     try {
-      if (!pet.race_id) {
-        console.log("El campo 'race_id' es requerido");
-        return;
+
+      const datos = new FormData();
+      datos.append('name', pet.name);
+      datos.append('race_id', parseInt(pet.race_id, 10));
+      datos.append('category_id', parseInt(pet.category_id, 10));
+      datos.append('gender_id', parseInt(pet.gender_id, 10));
+      datos.append('photo', file);
+      
+      console.log("FormData before send:", Array.from(datos.entries()));
+
+      const update = await axios.put(`http://localhost:3000/api/mascotas/${id}`, datos, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+      },
+    }
+      );
+      if (update.status === 200) {
+        alert("actualización exitosa");
       }
-  
-      const petData = {
-        name: pet.name,
-        race_id: parseInt(pet.race_id, 10),
-        category_id: parseInt(pet.category_id, 10),
-        gender_id: parseInt(pet.gender_id, 10),
-        photo: pet.photo
-      };
-  
-      const update = await axios.put(`http://localhost:3000/api/mascotas/${id}`, petData);
-      console.log(update);
+      router.push('/pets')
     } catch (error) {
       console.log(error.response.data);
     }
@@ -133,20 +139,23 @@ function page() {
     <div className='h-64 flex justify-center items-center'>
          <div className='rounded-full w-32 h-32 bg-green-100 border-2 border-gray-500 flex justify-center items-center'>
          {
-            file && file ? (
+            file && file ? ( 
             <Image
-            className='rounded-full w-full'
+            className='h-full w-full object-cover rounded-full'
             src={URL.createObjectURL(file)}
             alt='img'
             width={100}
             height={100}
             />
-          ): 
-            <Image
-            src={camera}
-            alt='camera'
-            />
-          }
+            ): (
+              <img 
+              src={`/img/${mascota.photo}`} 
+              alt={mascota.name} 
+              className="h-full w-full object-cover rounded-full" />
+            
+            )
+          } 
+          
          </div>
          
         </div>
@@ -176,7 +185,7 @@ function page() {
             </select>
             <input name='photo' 
             onChange={(e) => {
-              setFile(e.target.files[0])
+              setFile(e.target.files[0]);
             }}
             className='p-3 w-full bg-[#ffffffa5] outline-none placeholder:text-[#252f7c] rounded-[30px]' type="file" placeholder='Subir Foto' />
             <select name='gender_id' onChange={inputValue} value={pet.gender_id}
