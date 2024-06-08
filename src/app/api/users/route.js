@@ -24,3 +24,11 @@ export async function GET () {
         return new NextResponse(error.message, {status:500})  
     }
 }
+
+export async function POST (request) {
+    try {
+        const user = await request.json();
+    } catch (error) {
+        return new NextResponse(error.message, {status: 500})
+    }
+}

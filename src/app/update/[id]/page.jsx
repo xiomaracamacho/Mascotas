@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import arrows from "../../img/arrows.svg"
-import btnClose from "../../img/btn-close.svg"
 import btnUpdate from "../../img/btn-update.svg"
 import btnBack from "../../img/btn-back.svg"
 import Image from 'next/image'
 import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
+import Close from "../../components/Close"
+import { protectRoutes } from "../../components/Protect"
 
 function page() {
 
@@ -41,7 +41,7 @@ function page() {
         photo: mascotaData.photo || "img update"
       });
     } catch (error) {
-        console.log(error.reponse.data);
+        console.log(error);
     }
  }
 
@@ -129,12 +129,7 @@ function page() {
         />
         </Link>
     <h1 className='text-white text-center w-full'>Modificar mascotas</h1>
-       <Link href="/">
-          <Image
-          src={btnClose}
-          alt='btn cerrar'
-          />
-         </Link>
+      <Close/>
     </div>
     <div className='h-64 flex justify-center items-center'>
          <div className='rounded-full w-32 h-32 bg-green-100 border-2 border-gray-500 flex justify-center items-center'>
@@ -209,4 +204,4 @@ function page() {
   )
 }
 
-export default page
+export default protectRoutes(page)

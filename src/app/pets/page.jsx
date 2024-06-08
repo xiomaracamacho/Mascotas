@@ -4,15 +4,16 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import btnAdd from "../img/btn-add.svg";
-import btnClose from "../img/btn-close.svg";
 import btnDelete from "../img/btn-delete.svg";
 import btnEdit from "../img/btn-edit.svg";
 import btnShow from "../img/btn-show.svg";
 import btnBack from "../img/btn-back.svg"
-
 import Image from 'next/image';
+import Close from "../components/Close"
+import { protectRoutes } from "../components/Protect"
 
 function page() {
+
 
   const [mascotas, setMascotas] = useState([])
 
@@ -27,6 +28,8 @@ function page() {
     getMascotas();
     return alert("mascota eliminada")
   }
+
+
   useEffect (() => {
     getMascotas()
   },[])
@@ -43,12 +46,9 @@ function page() {
         />
         </Link>
        <h1 className='text-white text-center w-full'>Administrar mascotas</h1>
-             <Link href="/">
-            <Image
-        src={btnClose}
-        alt='btn-close'
-        />
-           </Link>
+           
+           <Close/>
+           
        </div>
        <div>
         <Link href="/registrar">
@@ -110,4 +110,4 @@ function page() {
   )
 }
 
-export default page
+export default protectRoutes(page)

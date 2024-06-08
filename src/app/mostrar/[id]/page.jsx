@@ -7,6 +7,8 @@ import { useParams } from 'next/navigation';
 import btnBack from "../../img/btn-back.svg"
 import btnClose from "../../img/btn-close.svg"
 import Image from 'next/image';
+import Close from "../../components/Close"
+import { protectRoutes } from "../../components/Protect"
 
 function page() {
 
@@ -18,7 +20,7 @@ function page() {
         const respuesta = await axios.get(`http://localhost:3000/api/mascotas/${id}`)
     setMascota(respuesta.data)
     } catch (error) {
-        console.log(error.reponse.data);
+        console.log(error);
     }
  }
 
@@ -37,12 +39,7 @@ function page() {
         />
         </Link>
     <h1 className='text-white text-center w-full'>Consultar mascota</h1>
-     <Link href="/">
-          <Image
-          src={btnClose}
-          alt='btn cerrar'
-          />
-         </Link>
+     <Close/>
 
     </div>
     <div className='h-64 flex justify-center items-center'>
@@ -80,4 +77,4 @@ function page() {
   )
 }
 
-export default page
+export default protectRoutes(page)
