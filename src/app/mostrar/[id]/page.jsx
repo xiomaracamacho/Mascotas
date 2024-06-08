@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import btnBack from "../../img/btn-back.svg"
-import btnClose from "../../img/btn-close.svg"
 import Image from 'next/image';
 import Close from "../../components/Close"
 import { protectRoutes } from "../../components/Protect"
