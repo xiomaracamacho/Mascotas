@@ -12,8 +12,9 @@ import btnBack from "../img/btn-back.svg"
 import Image from 'next/image'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import Close from "../components/Close"
-import { protectRoutes } from "../components/Protect"
+import Close from "../components/Cerrar"
+import { protectRoutes } from "../components/ProToken"
+import Swal from "sweetalert2"
 
 function page() {
 
@@ -84,11 +85,16 @@ function page() {
         },
       });
       if (registro.status === 200) {
-        alert("registro exitoso");
+        Swal.fire({
+          title: '¡Registro exitoso!',
+          text: '¡Mscota registrada correctamente!',
+          icon: 'success',
+          confirmButtonColor: '#1e5799', // Azul oscuro
+        });
+        router.push("/pets");
       }
-      router.push("/pets");
     } catch (error) {
-      console.log(error);
+      console.error("Error during registration:", error);
     }
   };
 

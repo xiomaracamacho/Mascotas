@@ -20,7 +20,7 @@ model User {
   password String @db.VarChar(64)
 }
 
-model Mascota {
+model Pet {
   id Int @id @default(autoincrement())
   name String @db.VarChar(32)
   race_id Int
@@ -35,17 +35,17 @@ model Mascota {
 model Race {
   id Int @id @default(autoincrement())
   name String @db.VarChar(32)
-  relationRace Mascota[]
+  relationRace Pet[]
 }
 
 model Category {
   id Int @id @default(autoincrement())
   name String @db.VarChar(32)
-  relationCategory Mascota[]
+  relationCategory Pet[]
 } 
 
 model Gender {
   id Int @id @default(autoincrement())
   name String @db.VarChar(32)
-  relationGender Mascota[]
+  relationGender Pet[]
 }

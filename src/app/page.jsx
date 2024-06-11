@@ -4,6 +4,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation"
+import Swal from "sweetalert2"
 
 export default function Home() {
   
@@ -21,27 +22,23 @@ export default function Home() {
       })
     }
 
-  const postData  = async (event) => {
-    event.preventDefault();
-    try {
+    const postData = async (event) => {
+      event.preventDefault();
+      try {
+        const respuesta = await axios.post("http://localhost:3000/api/validator", data);
+        const { token } = respuesta.data;
   
-      const respuesta = await axios.post("http://localhost:3000/api/validator", data);
-      
-      const { token } = respuesta.data 
-
-      if (respuesta.status === 201) {
-        
-        localStorage.setItem("token", token)
-        alert("Bienvenido")
-        router.push('/pets')
-        return console.log("usuario encontrado", respuesta.data);
-      } 
-
-    } catch (error) {
-      alert("usuario no encontrado")
-      console.log(error.response.data)
-    }
-  }
+        if (respuesta.status === 201) {
+          localStorage.setItem("token", token);
+          Swal.fire("¡Bienvenido a la App Mascotas!"); // Cambio aquí
+          router.push('/pets');
+          return console.log("usuario encontrado", respuesta.data);
+        }
+      } catch (error) {
+        Swal.fire("Usuario no encontrado"); // Cambio aquí
+        console.log(error.response.data);
+      }
+    };
 
   return (
     <div className="flex justify-center items-center">
@@ -56,7 +53,7 @@ export default function Home() {
         <input 
         name="password" value={data.password} onChange={inputValue} 
         className="bg-[#ffffff8d] rounded-[30px] p-3" 
-        type="text"  placeholder="Contraseña" required/>
+        type="password"  placeholder="Contraseña" required/>
 
         <button type="submit"
          className="bg-[#394b7d] p-3 rounded-[30px] text-white text-xl" >

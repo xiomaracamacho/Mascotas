@@ -7,8 +7,8 @@ import btnBack from "../../img/btn-back.svg"
 import Image from 'next/image'
 import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
-import Close from "../../components/Close"
-import { protectRoutes } from "../../components/Protect"
+import Close from "../../components/Cerrar"
+import { protectRoutes } from "../../components/ProToken"
 
 function page() {
 
@@ -80,34 +80,35 @@ function page() {
     })
   }
 
-
-  const putMascota = async (event) => {
-    event.preventDefault();
-    try {
-
-      const datos = new FormData();
-      datos.append('name', pet.name);
-      datos.append('race_id', parseInt(pet.race_id, 10));
-      datos.append('category_id', parseInt(pet.category_id, 10));
-      datos.append('gender_id', parseInt(pet.gender_id, 10));
-      datos.append('photo', file);
-      
-      console.log("FormData before send:", Array.from(datos.entries()));
-
-      const update = await axios.put(`http://localhost:3000/api/mascotas/${id}`, datos, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-      },
-    }
-      );
-      if (update.status === 200) {
-        alert("actualización exitosa");
+    const putMascota = async (event) => {
+      event.preventDefault();
+      try {
+        const formData = new FormData();
+        formData.append('name', pet.name);
+        formData.append('race_id', parseInt(pet.race_id, 10));
+        formData.append('category_id', parseInt(pet.category_id, 10));
+        formData.append('gender_id', parseInt(pet.gender_id, 10));
+        if (file) {
+          formData.append('photo', file);
+        }
+    
+        console.log("FormData before send:", Array.from(formData.entries()));
+    
+        const update = await axios.put(`http://localhost:3000/api/mascotas/${id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+    
+        if (update.status === 200) {
+          alert("actualización exitosa");
+        }
+        router.push('/pets');
+      } catch (error) {
+        console.log(error.response.data);
       }
-      router.push('/pets')
-    } catch (error) {
-      console.log(error.response.data);
-    }
-  };
+    };
+    
   
 
   useEffect(() => {
@@ -144,8 +145,8 @@ function page() {
             />
             ): (
               <img 
-              src={`/img/${mascota.photo}`} 
-              alt={mascota.name} 
+              src={`/img/${pet.photo}`} 
+              alt={pet.name} 
               className="h-full w-full object-cover rounded-full" />
             
             )
