@@ -9,6 +9,8 @@ import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
 import Close from "../../components/Cerrar"
 import { protectRoutes } from "../../components/ProToken"
+import Swal from "sweetalert2"
+
 
 function page() {
 
@@ -79,36 +81,50 @@ function page() {
       [event.target.name]: event.target.value
     })
   }
-
-    const putMascota = async (event) => {
-      event.preventDefault();
-      try {
-        const formData = new FormData();
-        formData.append('name', pet.name);
-        formData.append('race_id', parseInt(pet.race_id, 10));
-        formData.append('category_id', parseInt(pet.category_id, 10));
-        formData.append('gender_id', parseInt(pet.gender_id, 10));
-        if (file) {
-          formData.append('photo', file);
-        }
-    
-        console.log("FormData before send:", Array.from(formData.entries()));
-    
-        const update = await axios.put(`http://localhost:3000/api/mascotas/${id}`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-    
-        if (update.status === 200) {
-          alert("actualización exitosa");
-        }
-        router.push('/pets');
-      } catch (error) {
-        console.log(error.response.data);
+  const putMascota = async (event) => {
+    event.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append('name', pet.name);
+      formData.append('race_id', parseInt(pet.race_id, 10));
+      formData.append('category_id', parseInt(pet.category_id, 10));
+      formData.append('gender_id', parseInt(pet.gender_id, 10));
+      if (file) {
+        formData.append('photo', file);
       }
-    };
-    
+  
+      console.log("FormData before send:", Array.from(formData.entries()));
+  
+      const update = await axios.put(`http://localhost:3000/api/mascotas/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+  
+      if (update.status === 200) {
+        // Mostrar SweetAlert2 de éxito
+        await Swal.fire({
+          icon: 'success',
+          title: 'Actualización exitosa',
+          showConfirmButton: false,
+          timer: 1500  // Cerrar automáticamente después de 1.5 segundos
+        });
+        router.push('/pets');
+      } else {
+        // En caso de que no se actualice correctamente
+        throw new Error('Fallo en la actualización');
+      }
+    } catch (error) {
+      console.log(error.response);
+      // Mostrar SweetAlert2 de error
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Fallo en la actualización',
+      });
+    }
+  };
+  
   
 
   useEffect(() => {
