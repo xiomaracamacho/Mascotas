@@ -116,7 +116,7 @@ function page() {
               alt='btn-back'
             />
           </Link>
-          <h1 className='text-white text-center w-full'>Adicionar mascotas</h1>
+          <h1 className='text-white text-center w-full'>Adicionar Mascotas</h1>
           <Close/>
         </div>
         <div className='h-64 flex justify-center items-center'>

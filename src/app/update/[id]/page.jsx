@@ -102,21 +102,19 @@ function page() {
       });
   
       if (update.status === 200) {
-        // Mostrar SweetAlert2 de éxito
+
         await Swal.fire({
           icon: 'success',
           title: 'Actualización exitosa',
           showConfirmButton: false,
-          timer: 1500  // Cerrar automáticamente después de 1.5 segundos
+          timer: 1500 
         });
         router.push('/pets');
       } else {
-        // En caso de que no se actualice correctamente
         throw new Error('Fallo en la actualización');
       }
     } catch (error) {
       console.log(error.response);
-      // Mostrar SweetAlert2 de error
       await Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -145,7 +143,7 @@ function page() {
         alt='btn-back'
         />
         </Link>
-    <h1 className='text-white text-center w-full'>Modificar mascotas</h1>
+    <h1 className='text-white text-center w-full'>Modificar Mascotas</h1>
       <Close/>
     </div>
     <div className='h-64 flex justify-center items-center'>

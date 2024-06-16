@@ -1,18 +1,30 @@
 import prisma from "@/lib/prisma"
 import { NextResponse } from "next/server"
 
-export async function POST (request) {
+export async function POST(request) {
     try {
-        const data = await request.json()
-        const categoria = await prisma.category.create(({
+        const data = await request.json();
+        const categoria = await prisma.category.create({
             data: data
-        }))
-        return  new NextResponse(JSON.stringify(categoria), {
-            headers: {"Content-Type":"application/json"},
-            status: 200
-        })
+        });
+        return new NextResponse(
+            JSON.stringify({
+                message: 'Categoría registrada correctamente',
+                data: categoria
+            }),
+            {
+                headers: { 'Content-Type': 'application/json' },
+                status: 200
+            }
+        );
     } catch (error) {
-        return new NextResponse(error.message, {status:500})
+        return new NextResponse(
+            JSON.stringify({
+                message: 'Error al registrar categoría',
+                error: error.message
+            }),
+            { status: 500 }
+        );
     }
 }
 

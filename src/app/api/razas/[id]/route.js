@@ -8,7 +8,7 @@ export async function GET (request, {params}) {
             where : {id : id}
         })
         if (!result) {
-            return new NextResponse("Raza not found", {status: 404})
+            return new NextResponse("Raza no encontrada", {status: 404})
         }
         return NextResponse.json(result)
     } catch (error) {
@@ -16,28 +16,52 @@ export async function GET (request, {params}) {
     }
 }
 
-export async function DELETE (request, {params}) {
+export async function DELETE(request, { params }) {
     try {
-        const id = parseInt(params.id)
-        const result = await prisma.race.delete({
-            where : {id : id}
-        })
-        return NextResponse.json({message: result}, {status: 200})
+        const id = parseInt(params.id);
+        const result = await prisma.raza.delete({
+            where: { id: id }
+        });
+        return new NextResponse(
+            JSON.stringify({
+                message: 'Raza eliminada correctamente',
+                deletedRaza: result
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
     } catch (error) {
-        return new NextResponse(error.message, {status: 500})
+        return new NextResponse(
+            JSON.stringify({
+                message: 'Error al eliminar la raza',
+                error: error.message
+            }),
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
+        );
     }
 }
 
-export async function PUT (request, {params}) {
+export async function PUT(request, { params }) {
     try {
-        const id = parseInt(params.id)
-        const data = await request.json()
-        const result = await prisma.race.update({
-            where : {id : id},
-            data : data
-        })
-        return NextResponse.json({message: result}, {status: 200})
+        const id = parseInt(params.id);
+        const data = await request.json();
+        const result = await prisma.raza.update({
+            where: { id: id },
+            data: data
+        });
+        return new NextResponse(
+            JSON.stringify({
+                message: 'Raza actualizada correctamente',
+                updatedRaza: result
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
     } catch (error) {
-        return new NextResponse(error.message, {status: 500})
+        return new NextResponse(
+            JSON.stringify({
+                message: 'Error al actualizar la raza',
+                error: error.message
+            }),
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
+        );
     }
 }

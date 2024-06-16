@@ -15,7 +15,7 @@ export async function GET (request, {params}) {
             }
         })
         if (!result) {
-            return new NextResponse("mascota not found", {status: 404})
+            return new NextResponse("Mascota no encontrada", {status: 404})
         }
         return NextResponse.json(result)
     } catch (error) {

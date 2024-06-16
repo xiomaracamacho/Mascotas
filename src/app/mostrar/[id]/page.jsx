@@ -33,7 +33,7 @@ function Page() {
           <Link href="/pets">
             <Image src={btnBack} alt='btn-back' />
           </Link>
-          <h1 className='text-white text-center w-full'>Consultar mascota</h1>
+          <h1 className='text-white text-center w-full'>Consultar Mascota</h1>
           <Close />
         </div>
         <div className='h-64 flex justify-center items-center'>

@@ -9,22 +9,44 @@ export async function GET (request, {params}) {
         })
     
     if (!user) {
-        return new NextResponse("User not found", {status:404})
+        return new NextResponse("Usuario no Encontrado", {status:404})
     } 
     return NextResponse.json(user)
     } catch (error) {
         return new NextResponse(error.message, {status:500})  
     }
 }
-export async function DELETE (request, {params}) {
+
+export async function DELETE(request, { params }) {
     try {
-        const id = parseInt(params.id)
+        const id = parseInt(params.id);
         const result = await prisma.user.delete({
-            where: {id : id}
-        })
-        return NextResponse.json({message: result}, {status: 200})
+            where: { id: id }
+        });
+
+        if (result) {
+            return new NextResponse(
+                JSON.stringify({
+                    message: `Usuario con ID ${id} eliminado correctamente`
+                }),
+                { status: 200, headers: { 'Content-Type': 'application/json' } }
+            );
+        } else {
+            return new NextResponse(
+                JSON.stringify({
+                    message: `No se encontró ningún usuario con ID ${id}`
+                }),
+                { status: 404, headers: { 'Content-Type': 'application/json' } }
+            );
+        }
     } catch (error) {
-        return new NextResponse(error.message, {status:500})  
+        return new NextResponse(
+            JSON.stringify({
+                message: 'Error al eliminar el usuario',
+                error: error.message
+            }),
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
+        );
     }
 }
 
@@ -37,7 +59,7 @@ export async function PUT (request, {params}) {
             data: data
         })
         if (!result) {
-            return new NextResponse("User not found", {status: 404})
+            return new NextResponse("Usuario no Actualizado", {status: 404})
         }
         return NextResponse.json({message: result}, {status: 200})
     } catch (error) {

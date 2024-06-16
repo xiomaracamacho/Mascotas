@@ -64,7 +64,7 @@ function Page() {
           <Link href="/">
             <Image src={btnBack} alt='btn-back' />
           </Link>
-          <h1 className='text-white text-center w-full'>Administrar mascotas</h1>
+          <h1 className='text-white text-center w-full'>Administrar Mascotas</h1>
           <Close />
         </div>
         <div>

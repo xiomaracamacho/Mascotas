@@ -30,12 +30,12 @@ export default function Home() {
   
         if (respuesta.status === 201) {
           localStorage.setItem("token", token);
-          Swal.fire("¡Bienvenido a la App Mascotas!"); // Cambio aquí
+          Swal.fire("¡Bienvenido a la App Mascotas!"); 
           router.push('/pets');
           return console.log("usuario encontrado", respuesta.data);
         }
       } catch (error) {
-        Swal.fire("Usuario no encontrado"); // Cambio aquí
+        Swal.fire("Usuario no encontrado"); 
         console.log(error.response.data);
       }
     };
