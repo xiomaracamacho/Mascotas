@@ -2,6 +2,8 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"; 
+
+
 export async function POST(request) {
   try {
     const user = await request.json();
@@ -23,7 +25,7 @@ export async function POST(request) {
       );
     }
 
-    // Comparar la contraseña proporcionada con la contraseña hasheada en la base de datos
+  
     const isPasswordValid = await bcrypt.compare(user.password, result.password);
     
     if (!isPasswordValid) {
@@ -42,7 +44,7 @@ export async function POST(request) {
     console.log("token:", token);
 
     const respuesta = {
-      user: result, // Cambiado de user a result para devolver el usuario encontrado
+      user: result, 
       token: token
     };
 

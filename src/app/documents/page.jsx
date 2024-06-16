@@ -4,24 +4,22 @@ const DocumentPage = () => {
     const apiEndpoints = [
         {
             number: 1,
-            endpoint: '/POST',
-            uri: 'localhost:3000/actividades/',
-            description: 'Endpoint para registrar una actividad en la base de datos',
+            endpoint: 'POST',
+            uri: 'localhost:3000/api/users',
+            description: 'Endpoint para registrar un Usuario en la base de datos',
             method: 'POST',
             header: 'Content-Type: JSON',
             users: 'Encargado',
             requestJSON: {
-                id_actividad: 'ID INT',
-                fecha_actividad: 'date',
-                descripcion: 'string/text',
-                fk_mantenimiento: 'ID INT',
-                fk_tecnico: 'ID INT',
+                name: 'string/text',
+                email: 'string/text',
+                password: 'string/text',
             },
             response: {
                 correct: {
                     status: 200,
                     body: {
-                        message: 'Actividad registrada correctamente',
+                        message: 'Usuario registrado correctamente',
                         data: [
                             {
                                 fieldCount: 0,
@@ -38,86 +36,76 @@ const DocumentPage = () => {
                 incorrect: {
                     status: 403,
                     body: {
-                        message: 'Error al registrar Actividad'
+                        message: 'Error al registrar Usuario'
                     }
                 }
             }
         },
         {
             number: 2,
-            endpoint: '/GET',
-            uri: 'localhost:3000/actividades/',
-            description: 'Endpoint para listar las actividades registradas en la base de datos',
-            method: 'GET',
-            users: 'Administrador/Encargado',
+            endpoint: '/POST',
+            uri: 'localhost:3000/api/categorias',
+            description: 'Endpoint para registrar Categorias en la base de datos',
+            method: 'POST',
+            users: 'Administrador',
+            header: 'Content-Type: JSON',
             response: {
                 correct: {
                     status: 200,
                     body: [
                         {
-                            id_actividad: 'ID INT',
-                            fecha_actividad: 'date',
-                            descripcion: 'string/text',
-                            fk_mantenimiento: 'ID INT',
-                            fk_tecnico: 'ID INT'
+                            name: 'string/text',
                         }
                     ]
                 },
                 incorrect: {
                     status: 404,
                     body: {
-                        message: 'No se encontraron Actividades'
+                        message: 'No se encontraron Categorias'
                     }
                 }
             }
         },
         {
             number: 3,
-            endpoint: '/GET/:id',
-            uri: 'localhost:3000/actividades/',
-            description: 'Endpoint para buscar una actividad en la base de datos por su ID',
-            method: 'GET',
+            endpoint: '/POST',
+            uri: 'localhost:3000/api/generos',
+            description: 'Endpoint para registrar un Genero en la base de datos',
+            method: 'POST',
             users: 'Encargado',
+            header: 'Content-Type: JSON',
             response: {
                 correct: {
                     status: 200,
                     body: {
-                        id_actividad: 'ID INT',
-                        fecha_actividad: 'date',
-                        descripcion: 'string/text',
-                        fk_mantenimiento: 'ID INT',
-                        fk_tecnico: 'ID INT'
+                        name: 'string/text'
                     }
                 },
                 incorrect: {
                     status: 404,
                     body: {
-                        message: 'No se encontraron Actividades'
+                        message: 'No se encontraron Generos'
                     }
                 }
             }
         },
         {
             number: 4,
-            endpoint: '/PUT/:id',
-            uri: 'localhost:3000/actividades/',
-            description: 'Endpoint para actualizar los datos de una actividad en la base de datos',
-            method: 'PUT',
-            users: 'Administrador/Encargado',
+            endpoint: '/POST',
+            uri: 'localhost:3000/api/razas',
+            description: 'Endpoint para registrar una Raza en la base de datos',
+            method: 'POST',
+            users: 'Administrador',
             header: 'Content-Type: JSON',
             requestJSON: {
-                id_actividad: 'ID INT',
-                fecha_actividad: 'date',
-                descripcion: 'string/text',
-                fk_mantenimiento: 'ID INT',
-                fk_tecnico: 'ID INT'
+               name: 'string/text'
             },
             response: {
                 correct: {
                     status: 200,
                     body: {
-                        message: 'Actividad actualizada correctamente',
-                        categoria: [
+                        message: 'Raza registrada correctamente',
+                        Raza: [
                             {
                                 fieldCount: 0,
                                 affectedRows: 1,
@@ -134,14 +122,172 @@ const DocumentPage = () => {
                 incorrect: {
                     status: 403,
                     body: {
-                        message: 'Error al actualizar Actividad',
+                        message: 'Error al Registrar la Raza',
                         error: {
-                            // Muestra las características del error
+                           
                         }
+                    }
+                    
+                }
+            }
+        },
+        {
+            number: 5,
+            endpoint: '/POST',
+            uri: 'http://localhost:3000/api/validator',
+            description: 'Endpoint para generar Token a un Usuario en la base de datos',
+            method: 'POST',
+            users: 'Administrador',
+            header: 'Content-Type: JSON',
+            response: {
+
+                correct: {
+                    status: 200,
+                    body: {
+                        message: 'Token Generado correctamente',
+                        email: 'string/text',
+                        password: 'string/text',
+                    }
+                },
+                incorrect: {
+                    status: 404,
+                    body: {
+                        message: 'No se encontro el Usuario'
                     }
                 }
             }
-        }
+        },
+        {
+            number: 6,
+            endpoint: '/POST',
+            uri: 'http://localhost:3000/api/mascota',
+            description: 'Endpoint para Registrar una mascota en la base de datos',
+            method: 'POST',
+            users: 'Administrador',
+            header: 'Content-Type: FORM',
+            response: {
+                correct: {
+                    status: 200,
+                    body: {
+                        name: 'string/text',
+                        race_id: 'Int',
+                        category_id: 'Int',
+                        photo: 'archivo',
+                        gender_id: 'Int'
+                    }
+                },
+                incorrect: {
+                    status: 404,
+                    body: {
+                        message: 'No se pudo Registrar la Mascota'
+                    }
+                }
+            }
+        },
+        {
+            number: 7,
+            endpoint: '/PUT',
+            uri: 'http://localhost:3000/api/mascota/:id',
+            description: 'Endpoint para Actualizar una mascota en la base de datos',
+            method: 'PUT',
+            users: 'Administrador',
+            header: 'Content-Type: JSON',
+            response: {
+                correct: {
+                    status: 200,
+                    body: {
+                        name: 'string/text',
+                        race_id: 'Int',
+                        category_id: 'Int',
+                        photo: 'archivo',
+                        gender_id: 'Int'
+                    }
+                },
+                incorrect: {
+                    status: 404,
+                    body: {
+                        message: 'No se pudo Actualizar la Mascota'
+                    }
+                }
+            }
+        },
+        {
+            number: 8,
+            endpoint: '/GET',
+            uri: 'http://localhost:3000/api/mascota',
+            description: 'Endpoint para Listar las Mascotas',
+            method: 'GET',
+            users: 'Administrador',
+            header: 'Content-Type: JSON',
+            response: {
+                correct: {
+                    status: 200,
+                    correct: {
+                        name: '',
+                        race_id: '',
+                        category_id: '',
+                        photo: '',
+                        gender_id: ''
+                    }
+                },
+                incorrect: {
+                    status: 404,
+                    body: {
+                        message: 'No se encontraron Mascotas'
+                    }
+                }
+            }
+        },
+        
+        {
+            number: 9,
+            endpoint: '/GET',
+            uri: 'http://localhost:3000/api/mascota/:id',
+            description: 'Endpoint para Buscar La mascota por ID',
+            method: 'GET',
+            users: 'Administrador',
+            header: 'Content-Type: JSON',
+            response: {
+                correct: {
+                    status: 200,
+                    Lista: {
+                        name: '',
+                        race_id: '',
+                        category_id: '',
+                        photo: '',
+                        gender_id: ''
+                    }
+                },
+                incorrect: {
+                    status: 404,
+                    body: {
+                        message: 'No se encontro una Mascota con el ID ingresado'
+                    }
+                }
+            }
+        },
+        
+        
+        {
+            number: 10,
+            endpoint: '/DELETE',
+            uri: 'http://localhost:3000/api/mascota/:id',
+            description: 'Endpoint para Eliminar una mascota por ID',
+            method: 'DELETE',
+            users: 'Administrador',
+            header: 'Content-Type: JSON',
+            response: {
+                correct: {
+                    status: 200,
+                },
+                incorrect: {
+                    status: 404,
+                    body: {
+                        message: 'No se encontro una Mascota con el ID ingresado'
+                    }
+                }
+            }
+        },
     ];
 
     return (
