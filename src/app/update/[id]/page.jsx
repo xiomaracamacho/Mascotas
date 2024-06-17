@@ -8,7 +8,7 @@ import Image from 'next/image'
 import axios from 'axios';
 import { useParams, useRouter } from 'next/navigation';
 import Close from "../../components/Cerrar"
-import { protectRoutes } from "../../components/ProToken"
+import { proteger } from "../../components/ProToken"
 import Swal from "sweetalert2"
 
 
@@ -219,4 +219,4 @@ function page() {
   )
 }
 
-export default protectRoutes(page)
+export default proteger(page)

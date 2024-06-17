@@ -7,7 +7,7 @@ import { useParams } from 'next/navigation';
 import btnBack from "../../img/btn-back.svg"
 import Image from 'next/image';
 import Close from "../../components/Cerrar"
-import { protectRoutes } from "../../components/ProToken"
+import { proteger } from "../../components/ProToken"
 
 function Page() {
   const [pet, setPet] = useState(null);
@@ -84,4 +84,4 @@ function Page() {
   )
 }
 
-export default protectRoutes(Page);
+export default proteger(Page);

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-export const protectRoutes = (WrappedComponent) => {
+export const proteger = (WrappedComponent) => {
   return (props) => {
     const router = useRouter();
 
