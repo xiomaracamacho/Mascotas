@@ -23,7 +23,7 @@ function Page() {
       const data = response.data.datos;
       setPets(data);
     } catch (error) {
-      console.error('Error fetching pets:', error);
+      console.error('Error no se encontraron mascotas:', error);
     }
   };
 
@@ -71,7 +71,7 @@ function Page() {
             <Image src={btnAdd} alt="btn-register" />
           </Link>
         </div>
-
+      <div className='bg-[#ffffff81] text-center text-white rounded-[25px] '>Cantidad Moscotas</div>
    
 
         <div className="h-4/5 overflow-y-auto overflow-x-hidden">
