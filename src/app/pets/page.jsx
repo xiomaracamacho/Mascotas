@@ -71,8 +71,10 @@ function Page() {
             <Image src={btnAdd} alt="btn-register" />
           </Link>
         </div>
-      <div className='bg-[#ffffff81] text-center text-white rounded-[25px] '>Cantidad Moscotas</div>
-   
+        <div className='bg-[#ffffff81] text-center text-white rounded-[25px]'>Cantidad Moscotas
+      <h1>Perros: </h1>
+      <h2>Gatos: </h2>
+      </div>
 
         <div className="h-4/5 overflow-y-auto overflow-x-hidden">
           {pets.map((pet) => (
